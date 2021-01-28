@@ -6,7 +6,7 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
@@ -19,4 +19,6 @@ app.use('/api/products/:productId', createProxyMiddleware({ target: 'http://loca
 app.use('/api/wishlist/:productId', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 app.use('/api/wishlist/:productId', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 
-app.listen(PORT);
+app.listen(PORT, (PORT) => {
+  console.log(`Server Listening on port ${PORT}...`);
+});
