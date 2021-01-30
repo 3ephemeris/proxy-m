@@ -6,19 +6,19 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, '..', 'public')));
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 app.use(express.json());
 
 //size-carousel
-app.use('/api/items', createProxyMiddleware({ target: 'http://localhost:3001', changeOrigin: true }));
+app.use('/api/items', createProxyMiddleware({ target: 'http://ec2-52-53-215-61.us-west-1.compute.amazonaws.com:3001/', changeOrigin: true }));
 //reviews
-app.use('/products', createProxyMiddleware({ target: 'http://localhost:3002', changeOrigin: true }));
+app.use('/products', createProxyMiddleware({ target: 'http://54.187.133.21:3003', changeOrigin: true }));
 //similar-products
 app.use('/api/products/:productId', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 app.use('/api/wishlist/:productId', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 app.use('/api/wishlist/:productId', createProxyMiddleware({ target: 'http://localhost:3003', changeOrigin: true }));
 
-app.listen(PORT, (PORT) => {
+app.listen(PORT, () => {
   console.log(`Server Listening on port ${PORT}...`);
 });
